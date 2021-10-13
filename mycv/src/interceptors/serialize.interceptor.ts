@@ -4,6 +4,8 @@ import { plainToClass } from "class-transformer";
 import { map, Observable } from "rxjs";
 
 export class SerializeInterceptor implements NestInterceptor {
+  constructor(private dto: any) {}
+
   intercept(context: ExecutionContext, handler: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
     // 요청이 처리되기 전에 실행될 구문
     // console.log('Im running before the handler', context);
@@ -12,7 +14,7 @@ export class SerializeInterceptor implements NestInterceptor {
       map((data: any) => {
         // 요청이 처리된 후에 전달되기 전에 실행될 구문
         // console.log('Im running before response is sent out');
-        return plainToClass(UserDto, data, {
+        return plainToClass(this.dto, data, {
           excludeExtraneousValues: true,
         });
         
