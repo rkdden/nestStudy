@@ -5,6 +5,7 @@ import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Q
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 
+@Serialize(UserDto)
 @Controller('auth')
 export class UsersController {
 
@@ -16,7 +17,7 @@ export class UsersController {
   }
 
   // @UseInterceptors(new SerializeInterceptor(UserDto))
-  @Serialize(UserDto)
+
   @Get('/:id')
   async findUser(@Param('id') id: string) {
     console.log('handler is running');
